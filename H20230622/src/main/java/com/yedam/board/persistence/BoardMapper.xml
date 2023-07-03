@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- namespace = 클래스 이름 개념 -->
+  <!-- id = 메소드 이름 정도 -->
+<mapper namespace="com.yedam.board.persistence.BoardMapper"> 
+  <select id="boardList" parameterType="int" resultType="com.yedam.board.vo.BoardVO"> 
+    SELECT *
+	FROM (  SELECT rownum rn, a.*
+              FROM(   SELECT * 
+              		  FROM tbl_board
+                      ORDER BY brd_no DESC
+                   ) a
+          )b
+	WHERE b.rn > ((#{page} - 1) * 10) <![CDATA[ AND b.rn <= (#{page} * 10) ]]>
+  </select>
+  
+  <select id="selectBoard" parameterType="long">
+  	SELECT * FROM tbl_board WHERE brd_no = #{bno}
+  </select>
+  
+  <update id="updateCnt" parameterType="long">
+  	UPDATE tbl_board SET click_cnt = click_cnt + 1 WHERE brd_no = #{bno}
+  </update>
+  
+  <delete id="deleteBoard" parameterType="long">
+  	DELETE FROM tbl_board WHERE brd_no = #{bno}
+  </delete>
+  
+  <insert id="insertBoard" parameterType="board">
+   	INSERT INTO tbl_board (brd_no, brd_title, brd_writer, brd_content)
+   	VALUES (board_seq.nextval, #{brdTitle}, #{brdWriter} ,#{brdContent})
+  </insert>
+  
+  <update id="updateBoard" parameterType="board">
+   	UPDATE tbl_board 
+   	SET brd_title=#{brdTitle} , brd_content=#{brdContent} 
+   	WHERE brd_no = #{brdNo}
+  </update>
+  
+  <select id="totalCnt">
+  	SELECT COUNT(*) FROM tbl_board
+  </select>
+  
+</mapper>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- namespace = 클래스 이름 개념 -->
+  <!-- id = 메소드 이름 정도 -->
+  <!-- parameterType은 mybatis-config에 별칭을 지정해서 member임 -->
+<mapper namespace="com.yedam.member.persistence.MemberMapper"> 
+  <select id="login" resultType="member">
+  	SELECT * FROM tbl_users WHERE user_id = #{id} AND user_pw = #{pw}
+  </select>
+  
+  <insert id="insert" parameterType="member">
+  	INSERT INTO tbl_users (user_id, user_pw, user_name, user_birth, user_img)
+  	VALUES (#{userId},#{userPw}, #{userName}, #{userBirth}, #{userImg})
+  </insert>
+  
+  <select id="select" parameterType="String" resultType="member">
+  	SELECT * FROM tbl_users WHERE user_id = #{id}
+  </select>
+  
+  <update id="update" parameterType="member">
+  	UPDATE tbl_users SET user_phone=#{userPhone}, user_addr=#{userAddr} WHERE user_id=#{userId}
+  </update>
+</mapper>
