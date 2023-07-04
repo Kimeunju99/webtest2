@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class DAO {
-	static String url = "jdbc:oracle:thin:@13.209.88.220:1521/xe"; //52.79.226.75 //13.209.88.220
+	static String url = "jdbc:oracle:thin:@ip_insert:1521/xe"; //ip_insert 변경해야 함
 	static String user = "proj";
 	static String pass = "proj";
 	static Connection conn;
